@@ -29,9 +29,13 @@ class AuthController extends Controller
             ], 401);
         }
 
+        // Create authentication token
+        $token = $user->createToken('auth_token')->plainTextToken;
+
         return response()->json([
             'success' => true,
             'message' => 'Login successful.',
+            'token' => $token,
             'data' => [
                 'id' => $user->id,
                 'store_name' => $user->store_name,
@@ -39,6 +43,20 @@ class AuthController extends Controller
                 'email' => $user->email,
                 'phone_number' => $user->phone_number,
             ]
+        ]);
+    }
+
+    /**
+     * Logout user
+     */
+    public function logout(Request $request)
+    {
+        // Delete the token currently being used
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Logout successful.'
         ]);
     }
 }
