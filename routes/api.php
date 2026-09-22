@@ -3,16 +3,19 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\userController;
+use App\Http\Controllers\AuthController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// GET
+// Authentication
+Route::post('/login', [AuthController::class, 'login']);
+
+// Users
 Route::get('/users', [userController::class, 'index']);
 Route::get('/users/{id}', [userController::class, 'show']);
 
-// POST
-Route::post('/users', [userController::class, 'store']);
-Route::post('/users/{id}/update', [userController::class, 'update']);
-Route::post('/users/{id}/archive', [userController::class, 'archive']);
+Route::post('/create/users', [userController::class, 'store']);
+Route::post('/update/users/{id}', [userController::class, 'update']);
+Route::post('/archive/users/{id}', [userController::class, 'archive']);
