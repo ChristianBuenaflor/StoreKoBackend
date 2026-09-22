@@ -9,9 +9,10 @@ class Users extends Model
     protected $table = 'users';
 
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'user_name',
+        'store_name',
+        'name',
+        'email',
+        'phone_number',
         'password',
         'is_archived',
     ];
